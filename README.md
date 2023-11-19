@@ -4,8 +4,11 @@ Generate a section of patient discharge summaries from the [MIMIC-III](https://m
 
 ## Conda Environment Setup
 1. Create the environment
+
         conda env create -f environment.yml
-2. Activate the environment
+   
+3. Activate the environment
+   
         conda activate generate-discharge-summaries
 
 ### To run the notebooks associated with querying the MIMIC-III data using AWS Athena:
@@ -17,16 +20,24 @@ Generate a section of patient discharge summaries from the [MIMIC-III](https://m
 ## Running the streamlit app
 ### With Conda environment
 1. Move into the docker directory
+   
         cd docker
-2. Run the streamlit app
+   
+3. Run the streamlit app
+   
         streamlit run app.py
-3. Open localhost:8501 on a browser
+   
+5. Open localhost:8501 on a browser
 
 ### Running the streamlit app via Docker
 1. Build the image
+   
         docker build -t generate-discharge-summaries .
+   
 3. Run the container
+   
         docker run -p 8501:8501 generate-discharge-summaries
+   
 5. Open localhost:8501 on a browser
 
 
