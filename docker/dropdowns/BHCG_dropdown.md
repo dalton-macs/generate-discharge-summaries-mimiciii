@@ -24,3 +24,6 @@ The maximum number of tokens that the model can return. The actual summary lengt
 #### Maximum Chunk Size (Recursive only)
 The maximum chunk size for tokens in recursive summary. This value defines how many sentences to include in each batch. The lower the value, the higher the number of batches and therefore an increased number of individual summarizations. The higher the value, the lower number of batches and therefore decreased number of individual summarizations.
 
+#### Clicking Run
+Upon clicking "Run", the target text (Brief Hospital Course) is displayed. Whichever model and method chosen above will then generate the summary text. The ROUGE scores are then displayed, comparing the summary text to the target text.
+

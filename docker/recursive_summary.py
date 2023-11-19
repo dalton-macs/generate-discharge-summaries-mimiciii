@@ -81,13 +81,11 @@ def recursive_summarizer_meta(tokenized_text, model, tokenizer, max_chunk_size, 
         chunk_size = math.floor(text_len/n_chunks)
 
         chunks = chunk_sentences(tokenized_sentences, chunk_size)
-        # if len(chunks)==1:
-        #     combined_sentences = list(chain(*chunks))
-        #     return tokenizer.decode(combined_sentences, skip_special_tokens=True, clean_up_tokenization_spaces=True)
-            
 
         chunk_summs = []
         for chunk in chunks:
+            if len(chunk)==0:
+                continue
 
             input_ids = torch.tensor(chunk).to(DEVICE).unsqueeze(0)
             attention_mask = torch.ones(input_ids.size()).to(DEVICE)

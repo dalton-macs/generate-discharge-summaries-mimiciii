@@ -7,17 +7,10 @@ from datasets import load_dataset
 import evaluate
 import transformers
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
 from recursive_summary import main_summarizer
-
-CUDA_LAUNCH_BLOCKING=1
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 DATASET = 'dmacres/mimiciii-hospitalcourse-meta'
-
-# # TODO: change to v2
-# PEGASUS_FT = 'dmacres/pegasus-large-mimiciii-v2'
-# BART_FT = 'dmacres/bart-large-mimiciii-v2'
 
 def main():
         
@@ -79,7 +72,7 @@ def main():
                 st.markdown('## Target Text')
                 st.write(target_text)
 
-                with st.spinner(text="Generating..."):
+                with st.spinner(text="Generating... This could take a while..."):
                     tokenizer, model = get_model_and_tokenizer(model_selection)
     
                     summary = summarize(method, example, tokenizer, model, max_chunk_size = max_chunk_size, target_len = target_len)
@@ -110,11 +103,6 @@ def main():
             else:
                 note_selector = st.selectbox('Which note would you like to view?', list(range(1, st.session_state['example']['data']['n_notes']+1)), key = 'note-selector')
                 meta_note = st.session_state['example']['data'][key_mapping][note_selector-1]
-                # note_info_di = {key.upper(): [val] for key,val in meta_note.items() if key not in ('text', 'row_id')}
-                # # print(note_info_di)
-                # st.table(pd.DataFrame(note_info_di))
-                # # st.write(pd.DataFrame(note_info_di))
-                # st.write(meta_note['text'])
                 c1, c2, c3 = st.columns([1,1,1], gap = 'medium')
                 c1.markdown(f"### CATEGORY:\n ###### {meta_note['category']}")
                 c2.markdown(f"### DESCRIPTION:\n ###### {meta_note['description']}")
@@ -147,6 +135,14 @@ def main():
                 """
                 )
 
+                st.markdown("##### GitHub Repo")
+                st.markdown(
+                    """
+                [Here](https://github.com/daltonmacs99/generate-discharge-summaries-mimiciii) is the link to the GitHub Repo for this app.
+                """
+                )
+
+
 @st.cache_data(show_spinner=False)
 def read_markdown_file(markdown_file):
     return Path(markdown_file).read_text()
@@ -171,7 +167,7 @@ def get_model_and_tokenizer(selection):
     return AutoTokenizer.from_pretrained(selection), AutoModelForSeq2SeqLM.from_pretrained(selection).to(DEVICE)
 
 
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def summarize(method, _example, _tokenizer, _model, max_chunk_size = 1024, target_len = 512):
 
     if 'Recursive' in method:
