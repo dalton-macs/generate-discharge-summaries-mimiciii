@@ -30,16 +30,27 @@ Generate a section of patient discharge summaries from the [MIMIC-III](https://m
 5. Open localhost:8501 on a browser
 
 ### Running the streamlit app via Docker
+#### Option 1: Building the image locally
 1. Build the image
    
         docker build -t generate-discharge-summaries .
    
-3. Run the container
+2. Run the container
    
         docker run -p 8501:8501 generate-discharge-summaries
    
-5. Open localhost:8501 on a browser
+3. Open localhost:8501 on a browser
 
+#### Option 2: Pulling the image from Docker Hub
+1. Pull the image
+
+        docker pull dmacres99/generate-discharge-summaries
+
+2. Run the container
+
+        docker run -p 8501:8501 dmacres99/generate-discharge-summaries
+
+3. Open localhost:8501 on a browser
 
 This project is associated with the Masters of Data Science coursework (DS504) at Worcester Polytechnic Institute.
 
